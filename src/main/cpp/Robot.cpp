@@ -12,6 +12,8 @@ void Robot::RobotInit()
     frc::LiveWindow::GetInstance()->DisableAllTelemetry();
     frc::LiveWindow::GetInstance()->SetEnabled(false);
 
+    cat_winch.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 0);
+    cat_winch.SetSensorPhase(true);
     cat_winch.SetInverted(InvertType::InvertMotorOutput);
     cat_winch.Set(ControlMode::PercentOutput, 0);
 
@@ -35,7 +37,7 @@ void Robot::TeleopPeriodic()
     case CATAPULT_STATE::WINDING:
 
         cat_solenoid.Set(false);
-        cat_winch.Set(ControlMode::PercentOutput, 0.1);
+        cat_winch.Set(ControlMode::PercentOutput, 0.8);
 
         if (!cat_limit_switch.Get())
         {
@@ -48,9 +50,9 @@ void Robot::TeleopPeriodic()
 
     case CATAPULT_STATE::UNWINDING:
         cat_solenoid.Set(false);
-        cat_winch.Set(ControlMode::PercentOutput, -0.1);
-
-        if (cat_winch.GetSelectedSensorPosition() < -4 * APPROXIMATE_WINCH_ROTATION)
+        cat_winch.Set(ControlMode::PercentOutput, -1.0);
+        std::cout << "Pos: " << cat_winch.GetSelectedSensorPosition() << std::endl;
+        if (cat_winch.GetSelectedSensorPosition() < -1.6 * WINCH_ROTATION)
         {
             cat_state = CATAPULT_STATE::PRIMED;
             std::cout << "Catapult Transitioning to PRIMED" << std::endl;

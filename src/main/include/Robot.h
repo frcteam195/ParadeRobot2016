@@ -37,13 +37,12 @@ public:
 private:
     // Catapult
     TalonSRX cat_winch{6};
-    frc::Solenoid cat_solenoid{0};
-    frc::DigitalInput cat_limit_switch{0};
+    frc::Solenoid cat_solenoid{1};
+    frc::DigitalInput cat_limit_switch{9};
     CATAPULT_STATE cat_state = CATAPULT_STATE::WINDING;
 
-    const int TALON_ENCODER_MULTIPLER = 4;
-    const int ENCODER_TICKS = 128;
-    const int APPROXIMATE_WINCH_ROTATION = TALON_ENCODER_MULTIPLER * ENCODER_TICKS;
+    const int ENCODER_TICKS_PER_REV = 4096;
+    const int WINCH_ROTATION = ENCODER_TICKS_PER_REV;
 
     const double FIRING_DELAY = 1.5;
     ElapsedTimer firing_timer;
