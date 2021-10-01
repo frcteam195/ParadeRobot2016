@@ -35,12 +35,8 @@ public:
     void TestPeriodic() override;
 
 private:
-    // Intake
-    TalonSRX intake{1};
-
     // Catapult
-    TalonSRX cat_winch{5};
-    TalonSRX cat_winch_inv{6};
+    TalonSRX cat_winch{6};
     frc::Solenoid cat_solenoid{0};
     frc::DigitalInput cat_limit_switch{0};
     CATAPULT_STATE cat_state = CATAPULT_STATE::WINDING;
