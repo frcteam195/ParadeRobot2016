@@ -14,7 +14,7 @@ void Robot::RobotInit()
 
     cat_winch.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 0);
     cat_winch.SetSensorPhase(true);
-    cat_winch.SetInverted(InvertType::InvertMotorOutput);
+    cat_winch.SetInverted(InvertType::None);
     cat_winch.Set(ControlMode::PercentOutput, 0);
 
     std::cout << "Catapult State Defaults to WINDING" << std::endl;
@@ -52,7 +52,7 @@ void Robot::TeleopPeriodic()
         cat_solenoid.Set(false);
         cat_winch.Set(ControlMode::PercentOutput, -1.0);
         std::cout << "Pos: " << cat_winch.GetSelectedSensorPosition() << std::endl;
-        if (cat_winch.GetSelectedSensorPosition() < -1.6 * WINCH_ROTATION)
+        if (cat_winch.GetSelectedSensorPosition() < -1 * WINCH_ROTATION)
         {
             cat_state = CATAPULT_STATE::PRIMED;
             std::cout << "Catapult Transitioning to PRIMED" << std::endl;
