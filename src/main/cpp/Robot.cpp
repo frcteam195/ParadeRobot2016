@@ -6,16 +6,22 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/livewindow/LiveWindow.h>
+#include <iostream>
+
+using namespace ctre::phoenix::motorcontrol;
+using namespace ctre::phoenix::motorcontrol::can;
 
 void Robot::RobotInit()
 {
-    frc::LiveWindow::GetInstance()->DisableAllTelemetry();
-    frc::LiveWindow::GetInstance()->SetEnabled(false);
+    frc::LiveWindow::DisableAllTelemetry();
+    frc::LiveWindow::SetEnabled(false);
 
     cat_winch.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 0);
     cat_winch.SetSensorPhase(true);
     cat_winch.SetInverted(InvertType::None);
     cat_winch.Set(ControlMode::PercentOutput, 0);
+    SupplyCurrentLimitConfiguration limit(true, 35, 0, 0);
+    cat_winch.ConfigSupplyCurrentLimit(limit);
 
     std::cout << "Catapult State Defaults to WINDING" << std::endl;
 }

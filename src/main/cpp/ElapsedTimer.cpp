@@ -3,9 +3,9 @@
 ElapsedTimer::ElapsedTimer() {}
 
 void ElapsedTimer::start() {
-    startTime = frc::Timer::GetFPGATimestamp();
+    startTime = frc::Timer::GetFPGATimestamp().value();
 }
 
 double ElapsedTimer::hasElapsed() {
-    return frc::Timer::GetFPGATimestamp() - startTime;
+    return frc::Timer::GetFPGATimestamp().value() - startTime;
 }

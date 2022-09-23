@@ -4,9 +4,14 @@
 
 #pragma once
 
-#include <frc/WPILib.h>
+#include <frc/TimedRobot.h>
 #include <ctre/Phoenix.h>
 #include <ElapsedTimer.hpp>
+#include <frc/Solenoid.h>
+#include <frc/DigitalInput.h>
+#include <frc/Joystick.h>
+#include <frc/Compressor.h>
+
 
 class Robot : public frc::TimedRobot
 {
@@ -37,7 +42,7 @@ public:
 private:
     // Catapult
     TalonSRX cat_winch{6};
-    frc::Solenoid cat_solenoid{1};
+    frc::Solenoid cat_solenoid{frc::PneumaticsModuleType::CTREPCM, 1};
     frc::DigitalInput cat_limit_switch{9};
     CATAPULT_STATE cat_state = CATAPULT_STATE::WINDING;
 
@@ -47,6 +52,6 @@ private:
     const double FIRING_DELAY = 1.5;
     ElapsedTimer firing_timer;
 
-    frc::Compressor compressor{0};
+    frc::Compressor compressor{frc::PneumaticsModuleType::CTREPCM};
     frc::Joystick joystick{0};
 };
